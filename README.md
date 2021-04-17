@@ -8,17 +8,33 @@ To install the required tools use
 bash install.sh
 ```
 
-Change the alive.txt with the domains you need to test. These should be in below format
-```
-http://example.com
-https://example2.com
+**To run the tool use :**  
+
+```shell 
+ Usage: jsscanner domain_name [-f] path-to-urls-file
+
+ domain_name : FQDN with protocol
+ path-to-urls-file : Line saparated FQDN with protocol
+
+ Example :
+         jsscanner https://www.example.com/
+         jsscanner -f hosts.txt
+```  
+
+* Scanning single domain 
+
+```shell  
+jsscanner domain_name
+
+Eg. jsscanner https://www.example.com
 ```
 
-To run the tool use 
-```
-jsscanner path_to_alive.txt
+* Scanning multiple domains 
 
-Eg. jsscanner alive.txt
+```shell   
+jsscanner -f path-to-urls-file
+
+Eg. jsscanner -f alive.txt
 ```
 
 
