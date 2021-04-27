@@ -27,7 +27,7 @@ JScan_Func() {
     then
         for js in $jslinks
         do
-            filename=$(echo $js | awk -F/ '{print $(NF-0)}')
+            filename=$(echo $js | awk -F/ '{print $(NF-0)}' | sed  's/\?/\=\=/g')
             python3 $linkf -i $js -o cli >> $n1-$n2/js/$filename.endpoints
             echo "$js" >> $n1-$n2/jslinks.txt
             #wget $js -P db/$n1-$n2/ -q
