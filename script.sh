@@ -7,8 +7,15 @@ END='\033[0m'
 
 linkf=~/tools/LinkFinder/linkfinder.py
 
+CreateDir() {
+    DIRNAME=`date | sed  -e 's/ /_/g' -e 's/:/-/g' -e 's/IST//g' -e 's/UTC//g' -e 's/__/_/g'`
+    DIRNAME=`echo JSScanner_result_`$DIRNAME
+    mkdir -p $DIRNAME
+    echo $DIRNAME 
+}
+
 JScan_Func() {
-    cd Jsscanner_results
+    cd $2
     n1=$(echo $1 | awk -F/ '{print $3}')
     n2=$(echo $1 | awk -F/ '{print $1}' | sed 's/.$//')
     mkdir -p $n1-$n2/js
@@ -43,15 +50,15 @@ if [[ $# -eq 0 ]] ; then
     printf '\tjsscanner -f hosts.txt\n'
     exit 0
 elif [[ $# -eq 1 ]]; then
-    mkdir -p Jsscanner_results
+    DIRNAME=$(CreateDir)
     printf "${YELLOW}[+]${END} JSScanner started.\n"
-    JScan_Func $1
+    JScan_Func $1 $DIRNAME
 elif [[ $# -eq 2 && $(echo $1 | tr '[:upper:]' '[:lower:]') == "-f" ]]; then 
-    mkdir -p Jsscanner_results
+    DIRNAME=$(CreateDir)
     printf "${YELLOW}[+]${END} JSScanner started.\n"
     for i in $(cat $2)
     do
-        JScan_Func $i
+        JScan_Func $i $DIRNAME
     done   
 fi
 
