@@ -60,6 +60,9 @@ elif [[ $# -eq 2 && $(echo $1 | tr '[:upper:]' '[:lower:]') == "-f" ]]; then
     do
         JScan_Func $i $DIRNAME
     done   
+else 
+    printf "${YELLOW}[!]${END} Error.. Please check the provided arguments.\n"
+    exit
 fi
 
 printf "${YELLOW}[+]${END} Script is done.\n"
