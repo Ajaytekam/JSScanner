@@ -1,5 +1,6 @@
 #!/bin/bash
 
+RED='\033[0;31m'
 GREEN='\033[0;32m'
 YELLOW='\033[0;33m'
 CYAN='\033[0;36m'
@@ -53,15 +54,45 @@ elif [[ $# -eq 1 ]]; then
     DIRNAME=$(CreateDir)
     printf "${YELLOW}[+]${END} JSScanner started.\n"
     JScan_Func $1 $DIRNAME
-elif [[ $# -eq 2 && $(echo $1 | tr '[:upper:]' '[:lower:]') == "-f" ]]; then 
-    DIRNAME=$(CreateDir)
-    printf "${YELLOW}[+]${END} JSScanner started.\n"
-    for i in $(cat $2)
-    do
-        JScan_Func $i $DIRNAME
-    done   
+elif [[ $# -gt 1 ]]; then 
+    if [[ $(echo $1 | tr '[:upper:]' '[:lower:]') == "-f" ]] ; then 
+        INPUTFILE=$2
+        if [[ $(echo $3 | tr '[:upper:]' '[:lower:]') == "-d" ]];then
+            if [[ "$4" != "" ]] ; then
+                OUTPUTDIR=$4
+                mkdir -p $OUTPUTDIR
+                printf "${YELLOW}[+]${END} JSScanner started.\n"
+                for i in $(cat $INPUTFILE)
+                do
+                    JScan_Func $i $OUTPUTDIR
+                done   
+            else
+                printf "${RED}[!]${END} Error Dir name supplied\n"  
+                exit 1
+            fi
+        else
+            DIRNAME=$(CreateDir)
+            printf "${YELLOW}[+]${END} JSScanner started.\n"
+            for i in $(cat $2)
+            do
+                JScan_Func $i $DIRNAME
+            done   
+        fi
+    elif [[ $(echo $2 | tr '[:upper:]' '[:lower:]') == "-d" ]]; then
+        DOMAIN_NAME=$1
+        if [[ "$3" != "" ]];then
+            OUTPUTDIR=$3
+            mkdir -p $OUTPUTDIR
+            JScan_Func $DOMAIN_NAME $OUTPUTDIR
+        else
+            printf "${RED}[!]${END} Error : Output Dir not supplied\n"
+            exit 1
+        fi
+    else
+       printf "${RED}[!]${END} Error: Wrong arguments supplied\n"
+    fi
 else 
-    printf "${YELLOW}[!]${END} Error.. Please check the provided arguments.\n"
+    printf "${RED}[!]${END} Error.. Please check the provided arguments.\n"
     exit
 fi
 
