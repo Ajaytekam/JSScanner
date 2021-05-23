@@ -11,14 +11,16 @@ bash install.sh
 **To run the tool use :**  
 
 ```shell 
- Usage: jsscanner domain_name [-f] path-to-urls-file
+ Usage: jsscanner domain_name [-f] path-to-urls-file [-d] output_directory
 
- domain_name : FQDN with protocol
- path-to-urls-file : Line saparated FQDN with protocol
-
- Example :
-         jsscanner https://www.example.com/
-         jsscanner -f hosts.txt
+domain_name : FQDN with protocol
+path-to-urls-file : Line saparated FQDN with protocol
+output_directory  : User supplied output directory
+Example :
+	jsscanner https://www.example.com/
+	jsscanner https://www.example.com/ -d ./out
+	jsscanner -f hosts.txt
+	jsscanner -f hosts.txt -d ./out
 ```  
 
 * Scanning single domain 
