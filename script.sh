@@ -43,12 +43,15 @@ JScan_Func() {
 
 # Main Function Starts from Here 
 if [[ $# -eq 0 ]] ; then
-    printf '\n Usage: jsscanner domain_name [-f] path-to-urls-file\n\n'
+    printf '\n Usage: jsscanner domain_name [-f] path-to-urls-file [-d] output_directory\n\n'
     printf 'domain_name : FQDN with protocol\n'
     printf 'path-to-urls-file : Line saparated FQDN with protocol\n'
+    printf 'output_directory  : User supplied output directory' 
     printf '\nExample :\n'
     printf '\tjsscanner https://www.example.com/\n'
+    printf '\tjsscanner https://www.example.com/ -d ./out\n'
     printf '\tjsscanner -f hosts.txt\n'
+    printf '\tjsscanner -f hosts.txt -d ./out\n\n'
     exit 0
 elif [[ $# -eq 1 ]]; then
     DIRNAME=$(CreateDir)
