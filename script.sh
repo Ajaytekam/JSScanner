@@ -2,11 +2,13 @@
 
 RED='\033[0;31m'
 GREEN='\033[0;32m'
-YELLOW='\033[0;33m'
+BYELLOW='\033[1;33m'
 CYAN='\033[0;36m'
 END='\033[0m'
 
+
 linkf=~/tools/LinkFinder/linkfinder.py
+OPDIR=''
 
 CreateDir() {
     DIRNAME=`date | sed  -e 's/ /_/g' -e 's/:/-/g' -e 's/IST//g' -e 's/UTC//g' -e 's/__/_/g'`
@@ -16,6 +18,7 @@ CreateDir() {
 }
 
 JScan_Func() {
+    OPDIR=$2
     cd $2
     n1=$(echo $1 | awk -F/ '{print $3}')
     n2=$(echo $1 | awk -F/ '{print $1}' | sed 's/.$//')
@@ -38,7 +41,7 @@ JScan_Func() {
         done
     fi
     cd ..
-    printf "${GREEN}[+]${END} $i ${YELLOW}done${END}.\n"
+    printf "${BYELLOW}[+]${CYAN} $1 ${GREEN}done!${END}.\n"
 }
 
 # Main Function Starts from Here 
@@ -55,7 +58,7 @@ if [[ $# -eq 0 ]] ; then
     exit 0
 elif [[ $# -eq 1 ]]; then
     DIRNAME=$(CreateDir)
-    printf "${YELLOW}[+]${END} JSScanner started.\n"
+    printf "${BYELLOW}[+]${END} JSScanner started.\n"
     JScan_Func $1 $DIRNAME
 elif [[ $# -gt 1 ]]; then 
     if [[ $(echo $1 | tr '[:upper:]' '[:lower:]') == "-f" ]] ; then 
@@ -64,7 +67,7 @@ elif [[ $# -gt 1 ]]; then
             if [[ "$4" != "" ]] ; then
                 OUTPUTDIR=$4
                 mkdir -p $OUTPUTDIR
-                printf "${YELLOW}[+]${END} JSScanner started.\n"
+                printf "${BYELLOW}[+]${END} JSScanner started.\n"
                 for i in $(cat $INPUTFILE)
                 do
                     JScan_Func $i $OUTPUTDIR
@@ -75,8 +78,8 @@ elif [[ $# -gt 1 ]]; then
             fi
         else
             DIRNAME=$(CreateDir)
-            printf "${YELLOW}[+]${END} JSScanner started.\n"
-            for i in $(cat $2)
+            printf "${BYELLOW}[+]${END} JSScanner started.\n"
+            for i in $(cat $INPUTFILE)
             do
                 JScan_Func $i $DIRNAME
             done   
@@ -99,5 +102,5 @@ else
     exit
 fi
 
-printf "${YELLOW}[+]${END} Script is done.\n"
-printf "\n${YELLOW}[+]${END} Results stored in Jsscanner_results.\n"
+printf "${BYELLOW}[+]${CYAN} Script is done.${END}\n"
+printf "${BYELLOW}[+]${END} Results stored in ${CYAN}${OPDIR}${END}.\n"
